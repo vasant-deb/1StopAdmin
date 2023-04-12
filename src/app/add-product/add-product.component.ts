@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,44 +9,23 @@ import { environment } from '../../environment';
 const apiUrl = environment.apiUrl;
 
 @Component({
-  selector: 'app-edit-product',
-  templateUrl: './edit-product.component.html',
-  styleUrls: ['./edit-product.component.css']
+  selector: 'app-add-product',
+  templateUrl: './add-product.component.html',
+  styleUrls: ['./add-product.component.css']
 })
-export class EditProductComponent implements OnInit {
+export class AddProductComponent implements OnInit {
   productId: number=0;
   assetsUrl = environment.assetsUrl;
-
+categories:any[]=[];
   product: any = {};
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.productId = params['id'];
-    });
-    this.getProductDetails(this.productId);
+   this.getcategories();
   }
 
-  getProductDetails(id: number) {
-   
-    const data = { id };
-    this.http.post(apiUrl+'admingetproduct', data).subscribe((response: any) => {
-      this.product = response.product;
-      this.product.active=response.product.active;
-      if(this.product.active=="0"){
-        this.product.active='';
-      }
-      this.product.newarrival=response.product.newarrival;
-      if(this.product.newarrival=="0"){
-        this.product.newarrival='';
-      }
-      this.product.hot_product=response.product.hot_product;
-      if(this.product.hot_product=="0"){
-        this.product.hot_product='';
-      }
-    });
-  }
+  
  
   displayImage(event: any, imageType: string) {
     const file = event.target.files[0];
@@ -75,41 +55,65 @@ export class EditProductComponent implements OnInit {
       this.product[fieldName] = file;
     }
   }
-  
-  updateProduct() {
+  getcategories() {
+    this.http.get<any>(apiUrl + 'admingetcategories')
+      .subscribe(
+        (response: any) => {
+          this.categories = response;
 
-    const url = `updateproduct`;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  addProduct(){
+
+    const url = `adminaddproduct`;
     const formData = new FormData();
-    formData.append('id', this.productId.toString());
+  
+
+    if(this.product.meta_keyword===undefined){
+      this.product.meta_keyword='';
+    }
+    if(this.product.description===undefined){
+      this.product.description='';
+    }
+    if(this.product.meta_desc===undefined){
+      this.product.meta_desc='';
+    }
+    if(this.product.meta_title===undefined){
+      this.product.meta_title='';
+    }
+    
+
+    if (this.product.active === '' || this.product.active === false || this.product.active===undefined) {
+      this.product.active = '0';
+    } else {
+      this.product.active = '1';
+    }
+    if (this.product.newarrival === '' || this.product.newarrival === false || this.product.newarrival===undefined)  {
+      this.product.newarrival = '0';
+    } else {
+      this.product.newarrival = '1';
+    }
+    if (this.product.hot_product === '' || this.product.hot_product === false || this.product.hot_product===undefined) {
+      this.product.hot_product = '0';
+    } else {
+      this.product.hot_product = '1';
+    }
+    formData.append('category_id', this.product.category_id);
     formData.append('name', this.product.name);
     formData.append('description', this.product.description);
     formData.append('price', this.product.price);
     formData.append('meta_title', this.product.meta_title);
     formData.append('meta_desc', this.product.meta_desc);
     formData.append('meta_keyword', this.product.meta_keyword);
- 
-    if (this.product.active === '' || this.product.active === false) {
-      this.product.active = '0';
-    } else {
-      this.product.active = '1';
-    }
-    if (this.product.newarrival === '' || this.product.newarrival === false) {
-      this.product.newarrival = '0';
-    } else {
-      this.product.newarrival = '1';
-    }
-    if (this.product.hot_product === '' || this.product.hot_product === false) {
-      this.product.hot_product = '0';
-    } else {
-      this.product.hot_product = '1';
-    }
-  
     formData.append('active', this.product.active);
     formData.append('newarrival', this.product.newarrival);
     formData.append('hot_product', this.product.hot_product);
     
-    console.log(this.product.image);
-  
+   
     if (this.product.image instanceof File) {
       formData.append('image', this.product.image, this.product.image.name);
     }
@@ -122,7 +126,8 @@ export class EditProductComponent implements OnInit {
       this.snackBar.open('Updated Successfully', 'Close', {
         duration: 2000
       });
-      this.getProductDetails(this.productId);
+  
+      this.router.navigate(['/products']);
     });
   }
   

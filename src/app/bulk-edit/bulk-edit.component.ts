@@ -101,6 +101,9 @@ categories:any[]=[];
   }
  
 
+  onCategorySelect() {
+    this.filterProducts();
+  }
  filterProducts() {
     // filter the products array based on the search term and selected category
     this.filteredProducts = this.products.filter(product => {
@@ -113,9 +116,6 @@ categories:any[]=[];
     this.displayedProducts = this.filteredProducts.slice(0, this.pageSize);
   }
 
-  onCategorySelect() {
-    this.filterProducts();
-  }
 
 
 

@@ -21,6 +21,7 @@ import { SalesOrderComponent } from './sales-order/sales-order.component';
 import { BulkEditComponent } from './bulk-edit/bulk-edit.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AddProductComponent } from './add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ProductOrderComponent,
     NewproductOrderComponent,
     SalesOrderComponent,
-    BulkEditComponent
+    BulkEditComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

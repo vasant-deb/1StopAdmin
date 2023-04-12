@@ -1,0 +1,76 @@
+<app-header></app-header>
+
+<div class="container content">
+  <h2>Add Product</h2>
+
+  <div>
+
+    <form class="row" (ngSubmit)="addProduct()" #productForm="ngForm" enctype="multipart/form-data">
+        <div class="form-group col-md-6">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.name" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="name">Category</label>
+          <select id="category-select" name='category_id' id="category_id" class="form-control" [(ngModel)]="product.category_id" required>
+            <option value="0" disabled selected>Select a category</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="price">Price</label>
+          <input type="number" class="form-control" id="price" name="price" [(ngModel)]="product.price" required>
+        </div>
+        <div class="form-group col-md-12">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" name="description" [(ngModel)]="product.description"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="image">Image</label>
+          <img width="155px" height="155px" [src]="assetsUrl + 'products/no-image.jpg'" id="image-preview" />
+          <input type="file" required class="form-control-file" (change)="displayImage($event, 'image')" id="image" [(ngModel)]="product.image" name="image">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="back_image">Back Image</label>
+          <img width="155px" height="155px" [src]="assetsUrl + 'products/no-image.jpg'" id="back_image-preview" />
+          <input type="file" class="form-control-file" (change)="displayImage($event, 'back_image')" id="back_image" [(ngModel)]="product.back_image" name="back_image">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="meta_title">Meta Title</label>
+          <input type="text" class="form-control" id="meta_title" name="meta_title" [(ngModel)]="product.meta_title">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="meta_desc">Meta Description</label>
+          <input type="text" class="form-control" id="meta_desc" name="meta_desc" [(ngModel)]="product.meta_desc">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="meta_keyword">Meta Keyword</label>
+          <input type="text" class="form-control" id="meta_keyword" name="meta_keyword" [(ngModel)]="product.meta_keyword">
+        </div>
+        <div class="form-group form-check col-md-3">
+            <input type="checkbox" class="form-check-input" id="active" name="active" [(ngModel)]="product.active">
+            <label class="form-check-label" for="active">Active</label>
+          </div>
+          <div class="form-group form-check col-md-3">
+            <input type="checkbox" class="form-check-input" id="newarrival" name="newarrival" [(ngModel)]="product.newarrival">
+            <label class="form-check-label" for="newarrival">New Arrival</label>
+          </div>
+          <div class="form-group form-check col-md-3">
+            <input type="checkbox" class="form-check-input" id="hot_product" name="hot_product" [(ngModel)]="product.hot_product">
+            <label class="form-check-label" for="hot_product">Hot Product</label>
+          </div>
+          
+          
+          
+      <div class="col-md-6 form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!productForm.form.valid">Save</button>
+   </div>
+    </form>
+
+
+  </div>
+  
+  
+     
+
+</div>
