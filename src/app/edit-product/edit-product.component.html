@@ -11,6 +11,13 @@
             <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.name" required>
         </div>
         <div class="form-group col-md-6">
+            <label for="name">Category</label>
+            <select id="category-select" name='category_id' id="category_id" class="form-control" [(ngModel)]="product.category_id" required>
+              <option value="0" disabled>Select a category</option>
+              <option *ngFor="let category of categories" [value]="category.id" [selected]="category.id === product.category_id">{{ category.name }}</option>
+            </select>
+          </div>
+        <div class="form-group col-md-6">
             <label for="price">Price</label>
             <input type="number" class="form-control" id="price" name="price" [(ngModel)]="product.price" required>
         </div>

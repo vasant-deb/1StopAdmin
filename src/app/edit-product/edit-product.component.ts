@@ -15,6 +15,7 @@ const apiUrl = environment.apiUrl;
 export class EditProductComponent implements OnInit {
   productId: number=0;
   assetsUrl = environment.assetsUrl;
+  categories:any[]=[];
 
   product: any = {};
 
@@ -25,8 +26,20 @@ export class EditProductComponent implements OnInit {
       this.productId = params['id'];
     });
     this.getProductDetails(this.productId);
+    this.getcategories();
   }
+  getcategories() {
+    this.http.get<any>(apiUrl + 'admingetcategories')
+      .subscribe(
+        (response: any) => {
+          this.categories = response;
 
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
   getProductDetails(id: number) {
    
     const data = { id };
@@ -87,6 +100,7 @@ export class EditProductComponent implements OnInit {
     formData.append('meta_title', this.product.meta_title);
     formData.append('meta_desc', this.product.meta_desc);
     formData.append('meta_keyword', this.product.meta_keyword);
+    formData.append('category_id', this.product.category_id);
  
     if (this.product.active === '' || this.product.active === false) {
       this.product.active = '0';
