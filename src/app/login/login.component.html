@@ -1,0 +1,23 @@
+
+  
+
+<div class="container content">
+    <div class="row">
+        <div class="col-md-12">
+  <!-- Example usage of Bootstrap input and button -->
+  <form (ngSubmit)="onSubmit()" class="formstyle mybg">
+<div class="form-group">
+    <label for="username">Email</label>
+    <input type="email" [(ngModel)]="email" class="form-control" name="email" required>
+  </div>
+  <div class="form-group">
+    <label for="username">Password</label>
+    <input type="password" [(ngModel)]="password" class="form-control" name="password" required>
+  </div>
+  <button class="btn btn-primary mg10" (click)="onSubmit()">Login</button>
+  </form>
+</div>
+</div>
+</div>
+  <!-- Example usage of Material input and button -->
+  

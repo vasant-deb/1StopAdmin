@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+
+<div class="container content">
+    <h2>Products</h2>
+    <div class="row">
+      <div class="col-md-5 mb-3">
+        <input type="text" [(ngModel)]="searchText" placeholder="Search products" (input)="onSearch()" class="form-control">
+      </div>
+      <div class="col-md-7">
+        <a class="btn btn-primary mb-3" href="add-product">Add Product</a>
+      <a class="btn btn-danger mb-3" href="product-order">Product Order</a>
+        <a class="btn btn-warning mb-3" href="newproduct-order">New Arrival Order</a>
+         <a class="btn btn-primary mb-3" href="sales-order">Sales Order</a>
+        <a class="btn btn-danger mb-3" href="bulk-edit">Bulk Edit</a>
+  </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th>Copy</th>
+              <th>Edit</th>
+              <th>Status</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of displayedProducts">
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td><img width='75px' height="75px" [src]="assetsUrl +'products/'+ product.image"/>
+              </td>
+              <td><button (click)="copyProduct(product.id)">Copy</button></td>
+              <td><button (click)="editProduct(product.id)">Edit</button>
+              </td>
+              <td>
+                <select (change)="updateStatus(product.id)" [(ngModel)]="product.active">
+                  <option [value]="1">Active</option>
+                  <option [value]="0">Inactive</option>
+                </select>
+            </td>
+              <td><button (click)="deleteProduct(product.id,product.name)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="pageSize" [length]="products.length"
+          (page)="onPageChange($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+  
