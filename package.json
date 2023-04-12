@@ -23,6 +23,7 @@
     "angular-ui-sortable": "^0.19.0",
     "bootstrap": "^5.2.3",
     "ngx-bootstrap": "^10.2.0",
+    "ngx-pagination": "^6.0.3",
     "ngx-sortable": "^2.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

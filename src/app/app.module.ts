@@ -16,7 +16,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductOrderComponent } from './product-order/product-order.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NewproductOrderComponent } from './newproduct-order/newproduct-order.component';
+import { SalesOrderComponent } from './sales-order/sales-order.component';
+import { BulkEditComponent } from './bulk-edit/bulk-edit.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LoginComponent,
     ProductsComponent,
     EditProductComponent,
-    ProductOrderComponent
+    ProductOrderComponent,
+    NewproductOrderComponent,
+    SalesOrderComponent,
+    BulkEditComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +45,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSnackBarModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

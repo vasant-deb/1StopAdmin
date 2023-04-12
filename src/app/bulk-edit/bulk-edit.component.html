@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+
+<div class="container content">
+    <h2>Products</h2>
+   
+    <div class="row">
+      <div class="col-md-12">
+     
+
+        <div>
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Search products">
+            <select id="category-select" [(ngModel)]="selectedCategoryId" (change)="onCategorySelect()">
+                <option value="0" disabled selected>Select a category</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            <button (click)="filterProducts()">Search</button>
+            <button (click)="saveChanges()">Save changes</button>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of filteredProducts | paginate: { itemsPerPage: 50, currentPage: currentPage, totalItems: filteredProducts.length }">
+                  <td><input disabled type="text" [(ngModel)]="product.id"></td>
+                  <td class="name"><input type="text" class='form-control' (input)="product.changed = true" [(ngModel)]="product.name"></td>
+                  <td  class="name"><input type="text" class='form-control' (input)="product.changed = true" [(ngModel)]="product.price"></td>
+                  <td>
+                    <input type="checkbox" (change)="product.changed = true" [checked]="product.active === '1'" (click)="product.active = product.active === '1' ? '0' : '1'"/>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+        
+          </div>
+          
+          
+      
+      </div>
+    </div>
+  </div>
+  
