@@ -22,6 +22,8 @@ import { BulkEditComponent } from './bulk-edit/bulk-edit.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddProductComponent } from './add-product/add-product.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { AddProductComponent } from './add-product/add-product.component';
     MatPaginatorModule,
     ReactiveFormsModule,
     DragDropModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -88,7 +88,7 @@ export class EditProductComponent implements OnInit {
       this.product[fieldName] = file;
     }
   }
-  
+
   updateProduct() {
 
     const url = `updateproduct`;

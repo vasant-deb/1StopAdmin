@@ -2,22 +2,31 @@
 
 
 <div class="container content">
-    <h2>Sales Products Order</h2>
+    <h2>Sales Products Order ({{products.length}})</h2>
 </div>
 <br>
 
    
-<div class="container-fluid" *ngIf="products">
-    <div class="" *ngIf="products.length > 0">
-      <div cdkDropList cdkDropListOrientation="horizontal" class="row" (cdkDropListDropped)="drop($event)">
-        <div class="col-md-2" *ngFor="let product of products" cdkDrag [cdkDragBoundary]="product.selected ? '.product-grid .col-md-2.selected' : '.product-grid .col-md-2'" [class.selected]="product.selected" (click)="toggleProductSelection(product)">
-          <p><img width='150px' height="150px" [src]="assetsUrl +'products/'+ product.image"/></p>
-          <p>{{ product.name }}</p>
-          <p>{{product.id}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  
-  
+
+  <div #dropListContainer class="example-container" cdkDropListGroup>
+    <div
+  *ngFor="let item of products; let i = index"
+  cdkDropList
+  [cdkDropListData]="i"
+>
+  <div
+    cdkDrag
+    [cdkDragData]="i"
+    (cdkDragEntered)="dragEntered($event)"
+    (cdkDragMoved)="dragMoved($event)"
+    (cdkDragDropped)="dragDropped($event)"
+    class="example-box"
+  >
+    <img width='100px' height="100px" [src]="assetsUrl +'products/'+ item.image"/>
+    <p>{{ item.name }}</p>
+   
+  </div>
+</div>
+
+  </div>
