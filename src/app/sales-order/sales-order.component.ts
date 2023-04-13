@@ -62,7 +62,9 @@ interface Product {
       }
       );
       }
-      
+      refresh(){
+        window.location.reload();
+      }
       saveProductOrder() {
         // Create an array of all product IDs in the new order
         const newOrder = this.products.map(product => product.id);
@@ -98,7 +100,7 @@ interface Product {
       moveItemInArray(this.products, dragIndex, dropIndex);
     
       // Save the updated product order
-      this.saveProductOrder();
+    //  this.saveProductOrder();
     }
   }
   

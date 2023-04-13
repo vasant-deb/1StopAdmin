@@ -77,7 +77,9 @@ interface Product {
         });
       }
   
-
+      refresh(){
+        window.location.reload();
+      }
   dragEntered(event: CdkDragEnter<number>) {
     const drag = event.item;
     const dropList = event.container;
@@ -98,7 +100,7 @@ interface Product {
       moveItemInArray(this.products, dragIndex, dropIndex);
     
       // Save the updated product order
-      this.saveProductOrder();
+    //  this.saveProductOrder();
     }
   }
   

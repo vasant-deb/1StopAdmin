@@ -243,4 +243,10 @@ span.right {
     display: flex;
     flex-direction: row;
   }
+  .mg3{
+    margin:0px 5px;
+  }
+  .right{
+    float: right;
+  }
   

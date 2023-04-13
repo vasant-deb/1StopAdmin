@@ -109,10 +109,12 @@ interface Product {
       moveItemInArray(this.products, dragIndex, dropIndex);
     
       // Save the updated product order
-      this.saveProductOrder();
+    //  this.saveProductOrder();
     }
   }
-  
+  refresh(){
+    window.location.reload();
+  }
 
   dragMoved(event: CdkDragMove<number>) {
     if (!this.dropListContainer || !this.dragDropInfo) return;

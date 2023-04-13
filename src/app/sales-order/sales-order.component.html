@@ -2,11 +2,14 @@
 
 
 <div class="container content">
-    <h2>Sales Products Order ({{products.length}})</h2>
+    <h2>Sales Products Order ({{products.length}})
+
+        <button class="btn btn-primary mg3 right" (click)="saveProductOrder()">Save</button>
+    <button class="btn btn-danger mg3 right" (click)="refresh()">Refresh</button>
+    </h2>
+    
 </div>
 <br>
-
-   
 
 
   <div #dropListContainer class="example-container" cdkDropListGroup>

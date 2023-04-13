@@ -2,13 +2,18 @@
 
 
 <div class="container content">
-    <h2>Products Order</h2>
+    <h2>Products Order
+        <button class="btn btn-primary mg3 right" (click)="saveProductOrder()">Save</button>
+        <button class="btn btn-danger mg3 right" (click)="refresh()">Refresh</button>
+    </h2>
 <div>
-  <label for="category-select">Category:</label>
+  <label for="category-select" class="col-md-6">Category:
   <select id="category-select" [(ngModel)]="selectedCategoryId"  class='form-control' (change)="onCategorySelect()">
     <option value="0" disabled selected>Select a category</option>
     <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
   </select>
+</label>
+ 
 </div>
 </div>
 <br>
