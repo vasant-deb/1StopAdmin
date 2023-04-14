@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { environment } from '../../environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import {
   CdkDragDrop,
@@ -41,16 +42,19 @@ interface Product {
     dragIndex: number;
     dropIndex: number;
   };
-    constructor(private changeDetectorRef: ChangeDetectorRef,private http: HttpClient,private router: Router, private snackBar: MatSnackBar) { }
+    constructor(private spinner:NgxSpinnerService,private changeDetectorRef: ChangeDetectorRef,private http: HttpClient,private router: Router, private snackBar: MatSnackBar) { }
   ngOnInit(): void {
     this.getcategories();
   }
     getcategories() {
+      this.spinner.show();
+
       this.http.get<any>(apiUrl + 'admingetcategories')
         .subscribe(
           (response: any) => {
             this.categories = response;
-  
+            this.spinner.hide();
+
           },
           (error) => {
             console.log(error);
@@ -59,6 +63,8 @@ interface Product {
     }
   
     onCategorySelect() {
+      this.spinner.show();
+
       // Fetch all products associated with the selected category from the API
       this.http.post(apiUrl + 'admingetcatproduct', { id: this.selectedCategoryId })
       .subscribe(
@@ -67,6 +73,8 @@ interface Product {
       ...product,
       selected: false // Add a 'selected' property to each product and set it to false
       }));
+      this.spinner.hide();
+
       },
       (error: any) => {
       console.log(error);
@@ -75,17 +83,23 @@ interface Product {
       }
       
       saveProductOrder() {
+        this.spinner.show();
+
         // Create an array of all product IDs in the new order
         const newOrder = this.products.map(product => product.id);
-        
-        // Send the new order to the server
-        this.http.post(apiUrl + '/adminupdateproductorder', { order: newOrder }).subscribe(response => {
-          // Reload the products after updating the order
-          this.snackBar.open('Updated Successfully', 'Close', {
-            duration: 2000
+      
+        // Send the new order to the server with a delay of 2 seconds
+        setTimeout(() => {
+          this.http.post(apiUrl + '/adminupdateproductorder', { order: newOrder }).subscribe(response => {
+            // Reload the products after updating the order
+            this.snackBar.open('Updated Successfully', 'Close', {
+              duration: 2000
+            });
+            this.onCategorySelect();
+            this.spinner.hide();
+
           });
-          this.onCategorySelect();
-        });
+        }, 2000);
       }
   
 

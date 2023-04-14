@@ -69,7 +69,10 @@ export class ProductsComponent implements OnInit {
             duration: 2000
           });
           this.getAllProducts();
-          this.router.navigate(['/edit-product'], { queryParams: { id: response.id } });
+          //this.router.navigate(['/edit-product'], { queryParams: { id: response.id } });
+          this.router.navigate(['/edit-product'], { queryParams: { id: response.id } }).then(() => {
+            window.open(window.location.href, '_blank');
+          });
         },
         (error) => {
           console.log(error);
@@ -78,7 +81,10 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(productId: number) {
-    this.router.navigate(['/edit-product'], { queryParams: { id: productId } });
+  
+    this.router.navigate(['/edit-product'], { queryParams: { id: productId  } }).then(() => {
+      window.open(window.location.href, '_blank');
+    });
   }
 
   deleteProduct(productId: number, productName: string) {

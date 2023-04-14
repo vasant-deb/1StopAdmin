@@ -24,6 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AddProductComponent } from './add-product/add-product.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     DragDropModule,
     NgxPaginationModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
