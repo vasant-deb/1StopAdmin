@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://api.yusyah.com/',
+    apiUrl: 'https://vasantwebdev.info/1stopapi/public/',
     assetsUrl:'https://api.yusyah.com/public/uploads/'
   };
   
