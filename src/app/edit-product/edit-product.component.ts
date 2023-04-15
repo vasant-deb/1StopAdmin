@@ -45,6 +45,7 @@ export class EditProductComponent implements OnInit {
     const data = { id };
     this.http.post(apiUrl+'admingetproduct', data).subscribe((response: any) => {
       this.product = response.product;
+  
       this.product.active=response.product.active;
       if(this.product.active=="0"){
         this.product.active='';
