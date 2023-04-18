@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const apiUrl = environment.apiUrl;
 
@@ -19,7 +20,7 @@ export class AddProductComponent implements OnInit {
 categories:any[]=[];
   product: any = {};
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private spinner:NgxSpinnerService,private http: HttpClient, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
    this.getcategories();
@@ -56,11 +57,12 @@ categories:any[]=[];
     }
   }
   getcategories() {
+    
     this.http.get<any>(apiUrl + 'admingetcategories')
       .subscribe(
         (response: any) => {
           this.categories = response;
-
+          
         },
         (error) => {
           console.log(error);
@@ -68,7 +70,7 @@ categories:any[]=[];
       );
   }
   addProduct(){
-
+    this.spinner.show();
     const url = `adminaddproduct`;
     const formData = new FormData();
   
@@ -123,8 +125,11 @@ categories:any[]=[];
   
     this.http.post(apiUrl+url, formData).subscribe((response: any) => {
       console.log(response); // log success message or handle response as needed
+      this.spinner.hide();
       this.snackBar.open('Updated Successfully', 'Close', {
-        duration: 2000
+        duration: 2000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
       });
   
       this.router.navigate(['/products']);

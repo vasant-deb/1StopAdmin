@@ -79,7 +79,9 @@ interface Product {
           this.http.post(apiUrl + '/adminupdateproductorder', { order: newOrder }).subscribe(response => {
             // Reload the products after updating the order
             this.snackBar.open('Updated Successfully', 'Close', {
-              duration: 2000
+              duration: 2000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top'
             });
             this.onCategorySelect();
             this.spinner.hide();

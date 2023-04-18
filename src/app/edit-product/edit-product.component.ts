@@ -135,7 +135,9 @@ export class EditProductComponent implements OnInit {
     this.http.post(apiUrl+url, formData).subscribe((response: any) => {
       console.log(response); // log success message or handle response as needed
       this.snackBar.open('Updated Successfully', 'Close', {
-        duration: 2000
+        duration: 2000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
       });
       this.getProductDetails(this.productId);
     });

@@ -6,25 +6,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { environment } from '../../environment';
 
+import { NgxSpinnerService } from 'ngx-spinner';
 
 // access the API URL like this:
 const apiUrl = environment.apiUrl;
 
 interface Product {
   id: number;
-  name: string;
-  price: number;
-  image:string;
-  active:number;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  phone: string;
+  email:string;
+  user_password:string;
 }
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
 
-export class ProductsComponent implements OnInit {
+export class UsersComponent implements OnInit {
   assetsUrl = environment.assetsUrl;
   products: Product[] = [];
   displayedProducts: Product[] = [];
@@ -32,7 +35,7 @@ export class ProductsComponent implements OnInit {
   pageSize = 50;
   searchText = '';
  
-  constructor(private http: HttpClient,private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private spinner:NgxSpinnerService,private http: HttpClient,private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getAllProducts();
@@ -40,7 +43,7 @@ export class ProductsComponent implements OnInit {
 
   getAllProducts() {
     
-    this.http.get<Product[]>(apiUrl+'admingetproducts')
+    this.http.get<Product[]>(apiUrl+'admingetusers')
       .subscribe(
         (response: Product[]) => {
           console.log(response);
@@ -60,42 +63,24 @@ export class ProductsComponent implements OnInit {
     const endIndex = startIndex + this.pageSize;
     this.displayedProducts = this.products.slice(startIndex, endIndex);
   }
-  copyProduct(productId: number) {
-    this.http.post<any>(apiUrl+'admincopyproduct', { id: productId })
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.snackBar.open(response.message, 'Close', {
-            duration: 2000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-          this.getAllProducts();
-          //this.router.navigate(['/edit-product'], { queryParams: { id: response.id } });
-          this.router.navigate(['/edit-product'], { queryParams: { id: response.id } }).then(() => {
-            window.open(window.location.href, '_blank');
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
+ 
 
   editProduct(productId: number) {
   
-    this.router.navigate(['/edit-product'], { queryParams: { id: productId  } }).then(() => {
+    this.router.navigate(['/edit-user'], { queryParams: { id: productId  } }).then(() => {
       window.open(window.location.href, '_blank');
     });
   }
 
   deleteProduct(productId: number, productName: string) {
     if (confirm(`Are you sure you want to delete ${productName}?`)) {
-      this.http.post<any>(apiUrl+'admindeleteproduct', { id: productId })
+      this.spinner.show();
+      this.http.post<any>(apiUrl+'admindeleteuser', { id: productId })
         .subscribe(
           (response) => {
             console.log(response);
             this.getAllProducts();
+            this.spinner.hide();
             this.snackBar.open(response.message, 'Close', {
               duration: 2000,
               horizontalPosition: 'right',
@@ -109,39 +94,13 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  updateStatus(productId: number) {
-    debugger;
-    this.http.post<any>(apiUrl+'adminupdatestatus', { id: productId})
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.getAllProducts();
-          if(response.status=='success'){
-          this.snackBar.open('Updated', 'Close', {
-            duration: 2000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-        }
-        if(response.status=='failed'){
-          this.snackBar.open('Failed', 'Close', {
-            duration: 2000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-        }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
+
   onSearch() {
     if (!this.searchText) {
       this.displayedProducts = this.products.slice(0, this.pageSize);
     } else {
       const filteredProducts = this.products.filter(
-        (product) => product.name.toLowerCase().includes(this.searchText.toLowerCase())
+        (product) => product.first_name.toLowerCase().includes(this.searchText.toLowerCase())
       );
       this.displayedProducts = filteredProducts.slice(0, this.pageSize);
     }

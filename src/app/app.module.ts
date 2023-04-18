@@ -25,6 +25,19 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CategoriesComponent } from './categories/categories.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { CategoryOrderComponent } from './category-order/category-order.component';
+import { BannersComponent } from './banners/banners.component';
+import { AddBannerComponent } from './add-banner/add-banner.component';
+import { EditBannerComponent } from './edit-banner/edit-banner.component';
+import { OrdersComponent } from './orders/orders.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { UsersComponent } from './users/users.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { DeviceOrderComponent } from './device-order/device-order.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +50,20 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NewproductOrderComponent,
     SalesOrderComponent,
     BulkEditComponent,
-    AddProductComponent
+    AddProductComponent,
+    CategoriesComponent,
+    EditCategoryComponent,
+    AddCategoryComponent,
+    CategoryOrderComponent,
+    BannersComponent,
+    AddBannerComponent,
+    EditBannerComponent,
+    OrdersComponent,
+    ViewOrderComponent,
+    UsersComponent,
+    EditUserComponent,
+    DeviceOrderComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

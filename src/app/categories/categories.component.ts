@@ -10,24 +10,22 @@ import { environment } from '../../environment';
 // access the API URL like this:
 const apiUrl = environment.apiUrl;
 
-interface Product {
+interface Category {
   id: number;
   name: string;
-  price: number;
   image:string;
   active:number;
 }
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.css']
 })
-
-export class ProductsComponent implements OnInit {
+export class CategoriesComponent {
   assetsUrl = environment.assetsUrl;
-  products: Product[] = [];
-  displayedProducts: Product[] = [];
+  categories: Category[] = [];
+  displayedCategories: Category[] = [];
   currentPage = 1;
   pageSize = 50;
   searchText = '';
@@ -35,17 +33,17 @@ export class ProductsComponent implements OnInit {
   constructor(private http: HttpClient,private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.getAllProducts();
+    this.getAllCategories();
   }
 
-  getAllProducts() {
+  getAllCategories() {
     
-    this.http.get<Product[]>(apiUrl+'admingetproducts')
+    this.http.get<Category[]>(apiUrl+'admingetallcategories')
       .subscribe(
-        (response: Product[]) => {
+        (response: Category[]) => {
           console.log(response);
-          this.products = response;
-          this.displayedProducts = response.slice(0, this.pageSize);
+          this.categories = response;
+          this.displayedCategories = response.slice(0, this.pageSize);
         },
         (error) => {
           console.log(error);
@@ -58,44 +56,23 @@ export class ProductsComponent implements OnInit {
     this.pageSize = event.pageSize;
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.displayedProducts = this.products.slice(startIndex, endIndex);
-  }
-  copyProduct(productId: number) {
-    this.http.post<any>(apiUrl+'admincopyproduct', { id: productId })
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.snackBar.open(response.message, 'Close', {
-            duration: 2000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-          this.getAllProducts();
-          //this.router.navigate(['/edit-product'], { queryParams: { id: response.id } });
-          this.router.navigate(['/edit-product'], { queryParams: { id: response.id } }).then(() => {
-            window.open(window.location.href, '_blank');
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    this.displayedCategories = this.categories.slice(startIndex, endIndex);
   }
 
-  editProduct(productId: number) {
+  editCategory(categoryId: number) {
   
-    this.router.navigate(['/edit-product'], { queryParams: { id: productId  } }).then(() => {
+    this.router.navigate(['/edit-category'], { queryParams: { id: categoryId  } }).then(() => {
       window.open(window.location.href, '_blank');
     });
   }
 
-  deleteProduct(productId: number, productName: string) {
-    if (confirm(`Are you sure you want to delete ${productName}?`)) {
-      this.http.post<any>(apiUrl+'admindeleteproduct', { id: productId })
+  deleteCategory(categoryId: number, categoryName: string) {
+    if (confirm(`Are you sure you want to delete ${categoryName}?`)) {
+      this.http.post<any>(apiUrl+'admindeletecategory', { id: categoryId })
         .subscribe(
           (response) => {
             console.log(response);
-            this.getAllProducts();
+            this.getAllCategories();
             this.snackBar.open(response.message, 'Close', {
               duration: 2000,
               horizontalPosition: 'right',
@@ -110,12 +87,12 @@ export class ProductsComponent implements OnInit {
   }
 
   updateStatus(productId: number) {
-    debugger;
-    this.http.post<any>(apiUrl+'adminupdatestatus', { id: productId})
+   
+    this.http.post<any>(apiUrl+'adminupdatecategorystatus', { id: productId})
       .subscribe(
         (response) => {
           console.log(response);
-          this.getAllProducts();
+          this.getAllCategories();
           if(response.status=='success'){
           this.snackBar.open('Updated', 'Close', {
             duration: 2000,
@@ -136,14 +113,17 @@ export class ProductsComponent implements OnInit {
         }
       );
   }
+  refresh(){
+    window.location.reload();
+  }
   onSearch() {
     if (!this.searchText) {
-      this.displayedProducts = this.products.slice(0, this.pageSize);
+      this.displayedCategories = this.categories.slice(0, this.pageSize);
     } else {
-      const filteredProducts = this.products.filter(
-        (product) => product.name.toLowerCase().includes(this.searchText.toLowerCase())
+      const filteredProducts = this.categories.filter(
+        (category) => category.name.toLowerCase().includes(this.searchText.toLowerCase())
       );
-      this.displayedProducts = filteredProducts.slice(0, this.pageSize);
+      this.displayedCategories = filteredProducts.slice(0, this.pageSize);
     }
     this.currentPage = 1;
   }

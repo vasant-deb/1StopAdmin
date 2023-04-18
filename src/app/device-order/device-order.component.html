@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+
+<div class="container content">
+    <h2>Latest Device Order
+        <button class="btn btn-primary mg3 right" (click)="saveCategoryOrder()">Save</button>
+        <button class="btn btn-danger mg3 right" (click)="refresh()">Refresh</button>
+    </h2>
+<div>
+ 
+</div>
+</div>
+<br>
+
+   
+
+  <div #dropListContainer class="example-container" *ngIf="subcategories" cdkDropListGroup>
+    <div
+  *ngFor="let item of subcategories; let i = index"
+  cdkDropList
+  [cdkDropListData]="i"
+>
+  <div
+    cdkDrag
+    [cdkDragData]="i"
+    (cdkDragEntered)="dragEntered($event)"
+    (cdkDragMoved)="dragMoved($event)"
+    (cdkDragDropped)="dragDropped($event)"
+    class="example-box"
+  >
+    <img width='100px' height="100px" [src]="assetsUrl +'categories/'+ item.image"/>
+    <p>{{ item.name }}</p>
+   
+  </div>
+</div>
+
+  </div>
+  
+  

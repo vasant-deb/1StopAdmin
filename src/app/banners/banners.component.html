@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+
+<div class="container content">
+    <h2>Banners
+        <a class="btn btn-warning mb-3 right" href="add-banner">Add Banner</a>
+        <button class="btn btn-primary mg3 right" (click)="saveProductOrder()">Save</button>
+        <button class="btn btn-danger mg3 right" (click)="refresh()">Refresh</button>
+    </h2>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+        
+              <th>Image</th>
+        
+              <th>Edit</th>
+            
+              <th>Delete</th>
+            </tr>
+            <tbody  cdkDropList class="example-listx" (cdkDropListDropped)="drop($event)">
+        
+                  <tr
+                  class="example-boxx" *ngFor="let item of products" cdkDrag>
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td><img *ngIf="item.image" width='75px' height="75px" [src]="assetsUrl +'banners/'+ item.image"/>
+
+                <img *ngIf="!item.image" width='75px' height="75px" [src]="assetsUrl +'products/no-image.jpg'"/>
+                
+              </td>
+        
+              <td><button (click)="editBanner(item.id)">Edit</button>
+              </td>
+              
+              <td><button (click)="deleteBanner(item.id)">Delete</button></td>
+            </tr>
+          
+
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

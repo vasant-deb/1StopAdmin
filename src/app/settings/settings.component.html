@@ -1,0 +1,72 @@
+<app-header></app-header>
+
+<div class="container content">
+  <h2>Edit Settings</h2>
+
+  <div>
+
+    <form  class="row" (ngSubmit)="updateProduct()" #productForm="ngForm" enctype="multipart/form-data">
+        <div class="form-group col-md-6">
+            <label for="name">Site Name</label>
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.name" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="image">Image</label>
+            <img width="155px" height="155px" [src]="assetsUrl +  product.sitelogo" id="image-preview" />
+            <input type="file" class="form-control-file" (change)="displayImage($event, 'image')" id="image" [(ngModel)]="product.image" name="image">
+          </div>
+          
+        <div class="form-group col-md-6">
+            <label for="price">Email</label>
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="product.email" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Email Contact</label>
+            <input type="email" class="form-control" id="email_contact" name="email_contact" [(ngModel)]="product.email_contact" >
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Address 1</label>
+            <input type="text" class="form-control" id="address1" name="address1" [(ngModel)]="product.address1" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Address 2</label>
+            <input type="text" class="form-control" id="address2" name="address2" [(ngModel)]="product.address2" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Address 3</label>
+            <input type="text" class="form-control" id="address3" name="address3" [(ngModel)]="product.address3">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Contact Number</label>
+            <input type="text" class="form-control" id="contact_number" name="contact_number" [(ngModel)]="product.contact_number" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="price">Whatsapp Number</label>
+            <input type="text" class="form-control" id="contact_number2" name="contact_number2" [(ngModel)]="product.contact_number2" required>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="description">Header Text</label>
+            <textarea class="form-control" id="header_text" name="header_text" [(ngModel)]="product.header_text"></textarea>
+        </div>
+       
+        
+        <div class="form-group form-check col-md-3">
+            <input type="checkbox" class="form-check-input" id="status" name="status" [(ngModel)]="product.status">
+            <label class="form-check-label" for="status">Header Text Status</label>
+          </div>
+          
+          
+          
+          
+      <div class="col-md-6 form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!productForm.form.valid">Save</button>
+   </div>
+    </form>
+
+
+  </div>
+  
+  
+     
+
+</div>

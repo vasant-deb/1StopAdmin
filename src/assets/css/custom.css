@@ -249,4 +249,6 @@ span.right {
   .right{
     float: right;
   }
-  
+  .form-group{
+    margin:10px 0px;
+}

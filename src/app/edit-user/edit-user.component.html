@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<div class="container content">
+  <h2>Edit Product</h2>
+
+  <div>
+
+    <form  class="row" (ngSubmit)="updateProduct()" #productForm="ngForm" enctype="multipart/form-data">
+        <div class="form-group col-md-4">
+            <label for="name">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" [(ngModel)]="product.first_name" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="name">Middle Name</label>
+            <input type="text" class="form-control" id="middle_name" name="middle_name" [(ngModel)]="product.middle_name" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="name">Last Name</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" [(ngModel)]="product.last_name" required>
+        </div>
+          
+        <div class="form-group col-md-6">
+            <label for="price">Email</label>
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="product.email" required>
+        </div>
+       
+      
+          
+        <div class="form-group col-md-6">
+            <label for="meta_title">Password</label>
+            <input type="text" class="form-control" id="user_password" name="user_password" [(ngModel)]="product.user_password">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="meta_desc">GST</label>
+            <input type="text" class="form-control" id="gst" name="gst" [(ngModel)]="product.gst">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="meta_keyword">Prefered Doc Type</label>
+            <select class='form-control' name="doc_type" id="doc_type" [(ngModel)]="product.doc_type">
+                <option value="Full Invoice">Full Invoice</option>
+                <option value="Dispatch Note">Dispatch Note</option>
+              
+              </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="meta_desc">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="product.phone">
+        </div>
+        <div class="form-group form-check col-md-4">
+            <input type="checkbox" class="form-check-input" id="active" name="active" [(ngModel)]="product.active">
+            <label class="form-check-label" for="active">Active</label>
+          </div>
+         
+          
+          
+          
+      <div class="col-md-4 form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!productForm.form.valid">Save</button>
+   </div>
+    </form>
+
+
+  </div>
+  
+  
+     
+
+</div>

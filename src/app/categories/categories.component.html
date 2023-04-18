@@ -1,0 +1,60 @@
+<app-header></app-header>
+
+
+<div class="container content">
+    <h2>Categories</h2>
+    <div class="row">
+      <div class="col-md-4 ">
+        <input type="text" [(ngModel)]="searchText" placeholder="Search Categories" (input)="onSearch()" class="form-control">
+      </div>
+      <div class="col-md-8">
+        <a class="btn btn-primary mb-3" href="add-category">Add Category</a>
+      <a class="btn btn-danger mb-3" href="category-order">Category Order</a>
+         <a class="btn btn-warning mb-3" href="device-order">Latest Device Order</a>
+         <a class="btn btn-primary mb-3" href="category">Refresh</a>
+  </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+        
+              <th>Image</th>
+        
+              <th>Edit</th>
+              <th>Status</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of displayedCategories">
+              <td>{{ category.id }}</td>
+              <td>{{ category.name }}</td>
+              <td><img *ngIf="category.image" width='75px' height="75px" [src]="assetsUrl +'categories/'+ category.image"/>
+
+                <img *ngIf="!category.image" width='75px' height="75px" [src]="assetsUrl +'products/no-image.jpg'"/>
+                
+              </td>
+        
+              <td><button (click)="editCategory(category.id)">Edit</button>
+              </td>
+              <td>
+                <select (change)="updateStatus(category.id)" [(ngModel)]="category.active">
+                  <option [value]="1">Active</option>
+                  <option [value]="0">Inactive</option>
+                </select>
+            </td>
+              <td><button (click)="deleteCategory(category.id,category.name)">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="pageSize" [length]="categories.length"
+          (page)="onPageChange($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+  

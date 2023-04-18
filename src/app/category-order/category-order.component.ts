@@ -12,7 +12,7 @@ import {
   CdkDragMove,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-interface Product {
+interface Category {
   id: number;
   name: string;
   image: string;
@@ -24,18 +24,18 @@ interface Product {
   const apiUrl = environment.apiUrl;
   
   @Component({
-    selector: 'app-product-order',
-    templateUrl: './product-order.component.html',
-    styleUrls: ['./product-order.component.css']
+    selector: 'app-category-order',
+    templateUrl: './category-order.component.html',
+    styleUrls: ['./category-order.component.css']
   })
-  export class ProductOrderComponent implements OnInit {
+  export class CategoryOrderComponent implements OnInit {
     @ViewChild('dropListContainer') dropListContainer?: ElementRef;
     multiSelect: boolean = false;
     selectedProducts: any[] = [];
 
     categories: any[] = [];
     selectedCategoryId: number = 0;
-    products: any[] = [];
+    subcategories: any[] = [];
     assetsUrl = environment.assetsUrl;
     dropListReceiverElement?: HTMLElement;
     dragDropInfo?: {
@@ -66,11 +66,11 @@ interface Product {
       this.spinner.show();
 
       // Fetch all products associated with the selected category from the API
-      this.http.post(apiUrl + 'admingetcatproduct', { id: this.selectedCategoryId })
+      this.http.post(apiUrl + 'admingetcat', { id: this.selectedCategoryId })
       .subscribe(
       (response: any) => {
-      this.products = response.products.map((product: any) => ({
-      ...product,
+      this.subcategories = response.subcategories.map((category: any) => ({
+      ...category,
       selected: false // Add a 'selected' property to each product and set it to false
       }));
       this.spinner.hide();
@@ -82,16 +82,15 @@ interface Product {
       );
       }
       
-      saveProductOrder() {
+      saveCategoryOrder() {
         this.spinner.show();
 
         // Create an array of all product IDs in the new order
-        const newOrder = this.products.map(product => product.id);
+        const newOrder = this.subcategories.map(category => category.id);
       
         // Send the new order to the server with a delay of 2 seconds
         setTimeout(() => {
-      //  this.http.post(apiUrl + '/adminupdateproductorder', { order: newOrder }).subscribe(response => {
-         this.http.post('https://nodeapi.yusyah.com/adminupdateproductorder', { order: newOrder }).subscribe(response => {
+          this.http.post(apiUrl + '/adminupdatecategoryorder', { order: newOrder }).subscribe(response => {
             // Reload the products after updating the order
             this.snackBar.open('Updated Successfully', 'Close', {
               duration: 2000,
@@ -123,7 +122,7 @@ interface Product {
       phContainer.parentElement?.insertBefore(phElement, phContainer);
     
       // Update the product order in the products array
-      moveItemInArray(this.products, dragIndex, dropIndex);
+      moveItemInArray(this.subcategories, dragIndex, dropIndex);
     
       // Save the updated product order
     //  this.saveProductOrder();

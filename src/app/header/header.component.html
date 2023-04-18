@@ -1,21 +1,19 @@
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 
 <div class="container-fluid">
-    <div class="row">
-      <div class="menu-container">
-        <ul class="menu">
-          <li><a href="orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
-          <li><a href="banners"><i class="fas fa-image"></i> Banners</a></li>
-          <li><a href="categories"><i class="fas fa-list"></i> Categories</a></li>
-          <li><a class="active" href="products"><i class="fas fa-box-open"></i> Products</a></li>
-          <li><a href="menus"><i class="fas fa-bars"></i> Menus</a></li>
-          <li><a href="users"><i class="fas fa-users"></i> Users</a></li>
-          <li><a href="latest"><i class="fas fa-mobile-alt"></i> Latest Device Page</a></li>
-      
-          <li><a href="homepageitems"><i class="fas fa-home"></i> Home Page Items</a></li>
-          <li><a href="settings"><i class="fas fa-cog"></i> Settings</a></li>
-          <li><a href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-        </ul>
-      </div>
+  <div class="row">
+    <div class="menu-container">
+      <ul class="menu">
+        <li><a [class.active]="isActive('orders')" routerLink="/orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+        <li><a  [class.active]="isActive('banners')" routerLink="/banners"><i class="fas fa-image"></i> Banners</a></li>
+        <li><a  [class.active]="isActive('categories')" routerLink="/categories"><i class="fas fa-list"></i> Categories</a></li>
+        <li><a [class.active]="isActive('products')" routerLink="/products"><i class="fas fa-box-open"></i> Products</a></li>
+        <!--<li><a [class.active]="isActive('menus')" routerLink="/menus"><i class="fas fa-bars"></i> Menus</a></li> -->
+        <li><a [class.active]="isActive('users')" routerLink="/users"><i class="fas fa-users"></i> Users</a></li>
+     <!--  <li><a  [class.active]="isActive('homepageitems')" routerLink="/homepageitems"><i class="fas fa-home"></i> Home Page Items</a></li>--> 
+        <li><a  [class.active]="isActive('settings')" routerLink="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a [class.active]="isActive('logout')" routerLink="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
     </div>
   </div>
+</div>

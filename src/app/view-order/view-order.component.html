@@ -1,0 +1,101 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+<table class="table table-bordered">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <td style="width: 25%;">
+          <address>
+            <strong>1StopWireless</strong>
+            <br>5200 Dixie Road <br> Mississauga, ON, L4W 1E4
+          </address>
+          <b>Phone:</b> 905-232-2080 <br>
+          <b>Email:</b> info@1StopWireless.ca <br>
+          <b>Website:</b>
+          <a href="" target="_blank">1StopWireless</a>
+        </td>
+        <td style="width: 25%;">
+          <strong>Salman Khan</strong>
+          <br>
+          <b>Phone:</b>{{this.orders.phone}} <br>
+          <b>Email:</b> {{this.orders.email}} <br>
+          <br>
+          <b>Order ID : {{this.orders.order_id}}</b>
+          <br>
+          <b>Date : {{this.orders.created}}</b>
+          <br>
+          <b>Shipping Type :  {{this.orders.shipping_method}}</b>
+          <br>
+        </td>
+        <td style="width: 25%;">
+          <strong>Billing Address</strong>
+          <address>{{this.orders.billing_name}} <br>{{this.orders.billing_company}} <br>{{this.orders.billing_phone}}  <br>{{this.orders.billing_address}} {{this.orders.billing_address2}} <br>{{this.orders.billing_city}}, {{this.orders.billing_state}} {{this.orders.billing_zip}} </address>
+        </td>
+        <td style="width: 25%;">
+          <strong>Shipping Address</strong>
+          <address>{{this.orders.shipping_name}} <br>{{this.orders.shipping_company}} <br>{{this.orders.shipping_phone}}  <br>{{this.orders.shipping_address}} {{this.orders.shipping_address2}} <br>{{this.orders.shipping_city}}, {{this.orders.shipping_state}} {{this.orders.shipping_zip}} </address>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered content">
+    <thead>
+      <tr>
+        <td>
+          <b>S.No.</b>
+        </td>
+        <td>
+          <b>Product</b>
+        </td>
+        <td>
+          <b>Image</b>
+        </td>
+        <td class="text-right">
+          <b>Quantity</b>
+        </td>
+        <td class="text-right">
+          <b>Unit Price</b>
+        </td>
+        <td class="text-right">
+          <b>Total</b>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of order_items">
+        <td>{{order.id}}</td>
+        <td>{{order.name}}</td>
+        <td>
+          <img [src]="assetsUrl +'products/'+ order.image" width="100px" height="100px" class="img-responsive imgprint">
+        </td>
+        <td class="text-right">{{order.quantity}}</td>
+        <td class="text-right">{{order.price}}</td>
+        <td class="text-right">{{order.subtotal}}</td>
+      </tr>
+      <tr>
+        <td colspan="4" class="text-right">
+          <b>Subtotal</b>
+        </td>
+        <td class="text-right">{{this.orders.subtotal}}</td>
+      </tr>
+      <tr>
+        <td colspan="4" class="text-right">
+          <b>Tax</b>
+        </td>
+        <td class="text-right">{{this.orders.tax}}</td>
+      </tr>
+      <tr>
+        <td colspan="4" class="text-right">
+          <b>Total</b>
+        </td>
+        <td class="text-right">{{this.orders.total}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+</div>
+</div>
