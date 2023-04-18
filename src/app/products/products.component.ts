@@ -72,9 +72,11 @@ export class ProductsComponent implements OnInit {
           });
           this.getAllProducts();
           //this.router.navigate(['/edit-product'], { queryParams: { id: response.id } });
-          this.router.navigate(['/edit-product'], { queryParams: { id: response.id } }).then(() => {
-            window.open(window.location.href, '_blank');
-          });
+          const editUrl = `${window.location.origin}/edit-product?id=${response.id}`;
+          const newWindow = window.open(editUrl, '_blank');
+          if (newWindow !== null) {
+            newWindow.focus();
+          }
         },
         (error) => {
           console.log(error);
@@ -83,10 +85,17 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(productId: number) {
-  
+  /*
     this.router.navigate(['/edit-product'], { queryParams: { id: productId  } }).then(() => {
       window.open(window.location.href, '_blank');
     });
+    */
+    const editUrl = `${window.location.origin}/edit-product?id=${productId}`;
+    const newWindow = window.open(editUrl, '_blank');
+    if (newWindow !== null) {
+      newWindow.focus();
+    }
+   
   }
 
   deleteProduct(productId: number, productName: string) {
