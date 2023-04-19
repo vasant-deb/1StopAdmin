@@ -45,7 +45,9 @@ export class ProductsComponent implements OnInit {
         (response: Product[]) => {
           console.log(response);
           this.products = response;
-          this.displayedProducts = response.slice(0, this.pageSize);
+         // this.displayedProducts = response.slice(0, this.pageSize);
+         this.onSearch(); // Update displayed products after getting all products
+
         },
         (error) => {
           console.log(error);
@@ -58,8 +60,16 @@ export class ProductsComponent implements OnInit {
     this.pageSize = event.pageSize;
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.displayedProducts = this.products.slice(startIndex, endIndex);
+    if (!this.searchText) {
+      this.displayedProducts = this.products.slice(startIndex, endIndex);
+    } else {
+      const filteredProducts = this.products.filter(
+        (product) => product.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+      this.displayedProducts = filteredProducts.slice(startIndex, endIndex);
+    }
   }
+  
   copyProduct(productId: number) {
     this.http.post<any>(apiUrl+'admincopyproduct', { id: productId })
       .subscribe(
@@ -85,17 +95,11 @@ export class ProductsComponent implements OnInit {
   }
 
   editProduct(productId: number) {
-  /*
-    this.router.navigate(['/edit-product'], { queryParams: { id: productId  } }).then(() => {
-      window.open(window.location.href, '_blank');
-    });
-    */
     const editUrl = `${window.location.origin}/edit-product?id=${productId}`;
     const newWindow = window.open(editUrl, '_blank');
     if (newWindow !== null) {
       newWindow.focus();
     }
-   
   }
 
   deleteProduct(productId: number, productName: string) {
