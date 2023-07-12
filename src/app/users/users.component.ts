@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environment';
 
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import Fuse from 'fuse.js';
 // access the API URL like this:
 const apiUrl = environment.apiUrl;
 
@@ -18,6 +18,7 @@ interface Product {
   last_name: string;
   phone: string;
   email:string;
+  active:number,
   user_password:string;
 }
 
@@ -49,6 +50,7 @@ export class UsersComponent implements OnInit {
           console.log(response);
           this.products = response;
           this.displayedProducts = response.slice(0, this.pageSize);
+          this.onSearch();
         },
         (error) => {
           console.log(error);
@@ -63,15 +65,41 @@ export class UsersComponent implements OnInit {
     const endIndex = startIndex + this.pageSize;
     this.displayedProducts = this.products.slice(startIndex, endIndex);
   }
- 
+
+  updateStatus(productId: number) {
+    this.http.post<any>(apiUrl+'adminupdateuserstatus', { id: productId})
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.getAllProducts();
+          if(response.status=='success'){
+          this.snackBar.open('Updated', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        if(response.status=='failed'){
+          this.snackBar.open('Failed', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
 
   editProduct(productId: number) {
-  
     this.router.navigate(['/edit-user'], { queryParams: { id: productId  } }).then(() => {
       window.open(window.location.href, '_blank');
     });
   }
 
+  
   deleteProduct(productId: number, productName: string) {
     if (confirm(`Are you sure you want to delete ${productName}?`)) {
       this.spinner.show();
@@ -99,9 +127,13 @@ export class UsersComponent implements OnInit {
     if (!this.searchText) {
       this.displayedProducts = this.products.slice(0, this.pageSize);
     } else {
-      const filteredProducts = this.products.filter(
-        (product) => product.first_name.toLowerCase().includes(this.searchText.toLowerCase())
-      );
+      const fuse = new Fuse(this.products, {
+        keys: ['name', 'email','phone','id'],
+        threshold: 0.4, // adjust this to control the fuzziness of the search
+        includeMatches: true
+      });
+      const results = fuse.search(this.searchText);
+      const filteredProducts = results.map(result => result.item);
       this.displayedProducts = filteredProducts.slice(0, this.pageSize);
     }
     this.currentPage = 1;

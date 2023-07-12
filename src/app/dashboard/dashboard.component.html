@@ -1,0 +1,385 @@
+<app-header></app-header>
+
+
+<div class="analytics">
+
+		<aside class="analytics__sidebar">
+			
+		
+			<ul class="analytics__sidebar-list">
+				<li class="analytics__sidebar-item analytics__sidebar-item--bold" (click)="initial()">Sale Analysis</li>
+				<li class="analytics__sidebar-item analytics__sidebar-item--bold" (click)="viewusers()">
+					User Analysis
+				</li>
+                <li class="analytics__sidebar-item analytics__sidebar-item--bold" (click)="viewproducts()">
+					Product Analysis
+				</li>
+				<li class="analytics__sidebar-item analytics__sidebar-item--bold">
+					Profit Analysis
+				</li>
+				<li class="analytics__sidebar-item analytics__sidebar-item--bold">Inventory Analysis</li>
+				
+			</ul>
+		
+		</aside>
+        <div class="container myview">
+
+            <div id="root">
+                <div class="container">
+                  <div class="row align-items-stretch" *ngIf="salesview && this.salesstats">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Today's Sale<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count" *ngIf="this.salesstats.today_sales">${{this.salesstats.today_sales}}</span>
+                      </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Today's Order<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{this.salesstats.today_orders}}</span><span class="hind-font caption-12 c-dashboardInfo__subInfo">Last month: ${{this.salesstats.last_month_sales}}</span>
+                      </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total Sales<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">${{this.salesstats.total_sales}}</span>
+                      </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total Orders<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{this.salesstats.total_orders}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                        <div class="row">
+               
+		<!-- Sales Analysis-->
+
+			<div class="col-md-12" *ngIf="salesview && chartdata">
+			
+					<div class="analytics__header-content_header">Sales Analytics 
+
+                        <select [(ngModel)]="selectedView" (change)="onViewChange()">
+                            <option value="monthly">Monthly</option>
+                            <option value="daily">Daily</option>
+                          </select>
+                    </div>
+                    <div *ngIf="this.selectedView === 'monthly'">
+                    <canvasjs-chart [options]="chartmonthly" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+                    </div>
+                    <div *ngIf="this.selectedView === 'daily'">
+                        <canvasjs-chart [options]="chartdaily" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+                        </div>
+				</div>
+                
+                
+                <div class="col-md-6" *ngIf="salesview">
+                    <div class="analytics__header-content_header">Sales Month To Date</div>
+				
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Total Sales</th>
+                                <th>Total Orders</th>
+                             
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                            <tr *ngFor="let m of mtd">
+                                <td>{{m.date}}</td>
+                    
+                                <td>{{m.total_sales}}</td>
+                    
+                                <td>{{m.total_orders}}</td>
+                    
+                                
+                            </tr>
+                    
+                           
+                        </tbody>
+                    </table>
+				</div>
+
+                
+                <div class="col-md-6" *ngIf="salesview">
+                    <div class="analytics__header-content_header">Sales Year To Date</div>
+				
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Total Sales</th>
+                                <th>Total Orders</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                            <tr *ngFor="let y of ytm">
+                                <td>{{y.month}}</td>
+                    
+                                <td>{{y.total_sales}}</td>
+                    
+                                <td>{{y.total_orders}}</td>
+                            </tr>
+                    
+                           
+                        </tbody>
+                    </table>
+				</div>
+
+                <!--End Sales Analysis-->
+              
+                <!--User Analysis-->
+                <div class="row align-items-stretch" *ngIf="userview && userstats">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total Users<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{userstats.total_users}}</span>
+                      </div>
+                    </div>
+                  
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Active Users<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{userstats.active_users}}</span>
+                      </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Inactive Users<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{userstats.inactive_users}}</span>
+                      </div>
+                    </div>
+                 
+                      <div class="c-dashboardInfo col-lg-3 col-md-6">
+                        <div class="wrap">
+                          <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total Items in Cart<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                              <path fill="none" d="M0 0h24v24H0z"></path>
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                              </path>
+                            </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count" >{{userstats.total_items_in_cart}}</span>
+                        </div>
+                      </div>
+                  </div>
+                
+                  <div class="col-md-12">
+                  <select [(ngModel)]="userselectedView" (change)="onViewUserChange()">
+                    <option value="monthly">Monthly</option>
+                    <option value="daily">Daily</option>
+                  </select>
+                  <select [(ngModel)]="userselected" (change)="onUserChange()">
+                    <option value="0" disabled selected>Select User</option>
+                    <option *ngFor="let u of userlist" [value]="u.id">
+                      {{ u.first_name + ' ' + u.last_name  + ',' + u.company }}
+                    </option>
+                  </select>
+                  
+                </div>
+                <div class="col-md-12">
+                  <div *ngIf="this.userselectedView === 'monthly'">
+                    <canvasjs-chart [options]="chartmonthlyuser" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+                    </div>
+                    <div *ngIf="this.userselectedView === 'daily'">
+                        <canvasjs-chart [options]="chartdailyuser" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6" *ngIf="userview">
+			
+				
+                    <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+                    
+				</div>
+                <div class="col-md-6" *ngIf="userview">
+					
+					
+                    <canvasjs-chart [options]="chartLeastOptions" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+				</div>	
+                <div class="col-md-6" *ngIf="userview">
+					
+					
+                    <canvasjs-chart [options]="chartmap" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+				</div>	
+                <div class="col-md-6" *ngIf="userview">
+					
+					
+                    <canvasjs-chart [options]="chartcitymap" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+				</div>
+                <!--End User Analysis-->	
+
+               
+
+                <div class="row mg3"  *ngIf="userview">
+                    <div class="col-md-5">
+                      <h3>Live Cart Details</h3>
+                      </div>
+                      <div class="col-md-7 mb-3">
+                      <input type="text" [(ngModel)]="searchText" placeholder="Search users" (input)="onSearch()" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row"  *ngIf="userview">
+                    <div class="col-md-12">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        
+                            <th>Company</th>
+                            <th>Total Cart Items</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let product of displayedProducts">
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.first_name }} {{ product.last_name }}</td>
+                            <td>{{ product.email }}</td>
+                            <td>{{ product.phone }}</td>
+                            <td>{{ product.company }}</td>
+                            <td>{{ product.total_cart_items }}</td>
+                           
+                         
+                          </tr>
+                        </tbody>
+                      </table>
+                      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="pageSize" [length]="products.length"
+                        (page)="onPageChange($event)">
+                      </mat-paginator>
+                    </div>
+                  </div>
+
+                <!--Product Analysis-->
+               
+                <div class="row align-items-stretch" *ngIf="productview && prostats">
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Total Products<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{prostats.total_products}}</span>
+                      </div>
+                    </div>
+                  
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Active / Inactive<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{prostats.active_products}} / {{prostats.inactive_products}}</span>
+                      </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-3 col-md-6">
+                      <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">New Arrival / Sale<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                            </path>
+                          </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count">{{prostats.new_arrivals}} / {{prostats.hot_products}}</span>
+                      </div>
+                    </div>
+                 
+                      <div class="c-dashboardInfo col-lg-3 col-md-6">
+                        <div class="wrap">
+                          <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Categories / Sub<svg class="MuiSvgIcon-root-19" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
+                              <path fill="none" d="M0 0h24v24H0z"></path>
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z">
+                              </path>
+                            </svg></h4><span class="hind-font caption-12 c-dashboardInfo__count" *ngIf="totalcategories">{{this.totalcategories.total_categories_parent_zero}} / {{this.totalcategories.total_categories_parent_not_zero}}</span>
+                        </div>
+                      </div>
+                  </div>
+
+
+                <div class="col-md-12" *ngIf="productview">
+                    <canvasjs-chart [options]="charttopproduct" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+				</div>	
+                
+<br><br>
+                <div class="col-md-12 mg30" *ngIf="productview">
+			
+				
+                    <canvasjs-chart [options]="chartpie" [styles]="{width: '100%', height:'400px'}"></canvasjs-chart> 
+                    
+				</div>
+                <div class="col-md-6" *ngIf="productview">
+                    <div class="analytics__header-content_header">Top Selling Products</div>
+				
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>ORders</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody *ngIf="tablemax">
+                            <tr *ngFor="let max of tablemax">
+                                <td>{{max.product_name}}</td>
+                                <td>{{max.total_orders}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+				</div>
+
+                <div class="col-md-6" *ngIf="productview">
+                    <div class="analytics__header-content_header">Least Selling Products</div>
+				
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>ORders</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody *ngIf="tablemin">
+                            <tr *ngFor="let min of tablemin">
+                                <td>{{min.product_name}}</td>
+                                <td>{{min.total_orders}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+				</div>
+
+                <!--End Product Analysis-->
+                
+                
+    </div>
+</div>
+</div>

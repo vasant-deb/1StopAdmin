@@ -1,40 +1,41 @@
 <app-header></app-header>
 <div class="container-fluid mg30 content">
+  <!--
     <div class="row mycardrow">
 
 <div class="col-md-2 tile_stats_count">
 <span class="count_top"><i class="fas fa-users"></i> Total Users</span>
-<div class="count">125</div>
+<div class="count">{{this.details.total_users}}</div>
 </div> 
 
 <div class="col-md-2 tile_stats_count">
 <span class="count_top"><i class="fas fa-clock"></i> Total Products</span>
-<div class="count">77852</div>
+<div class="count">{{this.details.total_products}}</div>
 </div>
 
 <div class="col-md-2 tile_stats_count">
 <span class="count_top"><i class="fas fa-dollar-sign"></i> Total Sales</span>
-<div class="count green">19,985</div>
+<div class="count green">{{this.details.total_sales}}</div>
 </div>
 
 <div class="col-md-2 tile_stats_count">
 <span class="count_top"><i class="fas fa-shopping-cart"></i> Total Orders</span>
-<div class="count">500</div>
+<div class="count">{{this.details.total_orders}}</div>
 </div>
 
 <div class="col-md-2 tile_stats_count">
 <span class="count_top"><i class="fas fa-hourglass-half"></i> Pending Orders</span>
-<div class="count">26</div>
+<div class="count">{{this.details.total_pending_orders}}</div>
 </div>
 
 <div class="col-md-2 tile_stats_count">
 <span class="count_top"><i class="fas fa-check-circle"></i> Completed Orders</span>
-<div class="count green">474</div>
+<div class="count green">{{this.details.total_completed_orders}}</div>
 </div>
 
 </div>
 
-
+-->
 
    
     <div class="row">
@@ -48,11 +49,16 @@
             <tr>
               <th>Order ID	</th>
               <th>Customer Info	</th>
-              <th>Items</th>
+              <th>Shipping Address	</th>
+          <!--   <th>Items</th>-->
             
-              <th>Total Amount	</th>
+             
               <th>Shipping Type	</th>
+
+             
+
               <th>Order Date	</th>
+              <th>Total Amount	</th>
               <th>Order Status	</th>
               <th>Action</th>
             </tr>
@@ -60,22 +66,28 @@
           <tbody>
             <tr *ngFor="let order of displayedOrders">
               <td>{{ order.id }}</td>
-              <td><b>Name:</b> {{ order.customer_name }} <br> <b>Email:</b> {{ order.customer_email }} <br> <b>Phone:</b> {{ order.customer_phone }}</td>
-              <td>{{ order.item_count }}</td>
+              <td>{{ order.customer_name }} <br> {{ order.customer_email }} <br> {{ order.customer_phone }}</td>
+              <td  [innerHTML]="order.shipping_address"></td>
+           <!--   <td>{{ order.item_count }}</td>-->
 
-              <td>{{ order.subtotal }}</td>
+             
               <td>{{ order.shipping_method }}</td>
+
+             
+
+
               <td>{{ order.created }}</td>
-            
+              <td>{{ order.total }}</td>
               <td>
-                <select name="status" id="status" [(ngModel)]="order.status" (change)="updateStatus($event, order.id)">
-                    <option value="Pending">Pending</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Canceled">Canceled</option>
-                  </select>
+                <select name="status" id="status" [(ngModel)]="order.status" class="{{ order.status }}" (change)="updateStatus($event, order.id)">
+                  <option value="Pending">Pending</option>
+                  <option value="In Process">In Process</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Canceled">Canceled</option>
+                </select>
             </td>
-              <td><button (click)="viewOrder(order.id)">View</button><button (click)="deleteOrder(order.id)">Delete</button></td>
+              <td><a target="_blank" href="edit-order?id={{order.id}}" class="btn btn-primary">Edit</a> <a target="_blank" href="view-order?id={{order.id}}" class="btn btn-primary">View</a>&nbsp;<button class="btn btn-danger" (click)="deleteOrder(order.id)">Delete</button></td>
             </tr>
           </tbody>
         </table>

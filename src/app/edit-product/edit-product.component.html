@@ -41,6 +41,7 @@
             <label for="back_image">Back Image</label>
             <img width="155px" height="155px" [src]="product.back_image ? (assetsUrl + 'products/' + product.back_image) : (assetsUrl + 'products/no-image.jpg')" id="back_image-preview" />
             <input type="file" class="form-control-file" (change)="displayImage($event, 'back_image')" id="back_image" [(ngModel)]="product.back_image" name="back_image">
+          <button (click)="removebackImage()">Remove Image</button>
           </div>
           
         <div class="form-group col-md-6">

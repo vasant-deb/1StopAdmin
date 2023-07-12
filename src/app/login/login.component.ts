@@ -21,6 +21,7 @@ interface LoginResponse {
   token: string;
   email: string;
   error:boolean;
+  role:string;
 }
 
 @Component({
@@ -48,12 +49,14 @@ export class LoginComponent {
           // handle successful login
           const message = response.message;
           const error=response.error;
+          const role=response.role;
           this.snackBar.open(message, 'Close', {
             duration: 2000
           });
           if(error===false){
             localStorage.setItem('token', response.token);
             localStorage.setItem('email', response.email);
+            localStorage.setItem('role', response.role);
             // navigate to products page
             this.router.navigate(['/products']);
           }         

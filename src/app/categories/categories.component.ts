@@ -15,6 +15,7 @@ interface Category {
   name: string;
   image:string;
   active:number;
+  tag:number;
 }
 
 @Component({
@@ -89,6 +90,33 @@ export class CategoriesComponent {
   updateStatus(productId: number) {
    
     this.http.post<any>(apiUrl+'adminupdatecategorystatus', { id: productId})
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.getAllCategories();
+          if(response.status=='success'){
+          this.snackBar.open('Updated', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        if(response.status=='failed'){
+          this.snackBar.open('Failed', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  updateTagStatus(productId: number) {
+   
+    this.http.post<any>(apiUrl+'adminupdatecategorytag', { id: productId})
       .subscribe(
         (response) => {
           console.log(response);

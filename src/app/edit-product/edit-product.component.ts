@@ -40,6 +40,16 @@ export class EditProductComponent implements OnInit {
         }
       );
   }
+  removebackImage(){
+   
+  
+  
+    this.http.post(apiUrl+'adminremoveimage',  {id: this.productId}).subscribe((response: any) => {
+      debugger;
+      window.location.reload();
+    });
+
+  }
   getProductDetails(id: number) {
    
     const data = { id };

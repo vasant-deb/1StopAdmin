@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -39,6 +39,11 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { DeviceOrderComponent } from './device-order/device-order.component';
 import { SettingsComponent } from './settings/settings.component';
 
+import { MatSelectModule } from '@angular/material/select';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditOrderComponent } from './edit-order/edit-order.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,11 +68,14 @@ import { SettingsComponent } from './settings/settings.component';
     UsersComponent,
     EditUserComponent,
     DeviceOrderComponent,
-    SettingsComponent
+    SettingsComponent,
+    DashboardComponent,
+    EditOrderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CanvasJSAngularChartsModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -79,7 +87,10 @@ import { SettingsComponent } from './settings/settings.component';
     DragDropModule,
     NgxPaginationModule,
     NgSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatSelectModule
+   
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

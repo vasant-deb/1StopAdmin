@@ -1,33 +1,33 @@
 <app-header></app-header>
 
 <div class="container content">
-  <h2>Edit Product</h2>
+  <h2>Edit User</h2>
 
   <div>
 
     <form  class="row" (ngSubmit)="updateProduct()" #productForm="ngForm" enctype="multipart/form-data">
         <div class="form-group col-md-4">
-            <label for="name">First Name</label>
+            <label for="name">* First Name</label>
             <input type="text" class="form-control" id="first_name" name="first_name" [(ngModel)]="product.first_name" required>
         </div>
         <div class="form-group col-md-4">
             <label for="name">Middle Name</label>
-            <input type="text" class="form-control" id="middle_name" name="middle_name" [(ngModel)]="product.middle_name" required>
+            <input type="text" class="form-control" id="middle_name" name="middle_name" [(ngModel)]="product.middle_name">
         </div>
         <div class="form-group col-md-4">
             <label for="name">Last Name</label>
-            <input type="text" class="form-control" id="last_name" name="last_name" [(ngModel)]="product.last_name" required>
+            <input type="text" class="form-control" id="last_name" name="last_name" [(ngModel)]="product.last_name">
         </div>
           
         <div class="form-group col-md-6">
-            <label for="price">Email</label>
+            <label for="price">* Email</label>
             <input type="email" class="form-control" id="email" name="email" [(ngModel)]="product.email" required>
         </div>
        
       
           
         <div class="form-group col-md-6">
-            <label for="meta_title">Password</label>
+            <label for="meta_title">* Password</label>
             <input type="text" class="form-control" id="user_password" name="user_password" [(ngModel)]="product.user_password">
         </div>
         <div class="form-group col-md-6">

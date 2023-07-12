@@ -25,7 +25,9 @@
               <th>Image</th>
         
               <th>Edit</th>
+              <th>Tag</th>
               <th>Status</th>
+             
               <th>Delete</th>
             </tr>
           </thead>
@@ -41,6 +43,11 @@
         
               <td><button (click)="editCategory(category.id)">Edit</button>
               </td>
+              <td>
+                <select (change)="updateTagStatus(category.id)" [(ngModel)]="category.tag">
+                  <option [value]="1">NEW</option>
+                  <option [value]="0">OLD</option>
+                </select>
               <td>
                 <select (change)="updateStatus(category.id)" [(ngModel)]="category.active">
                   <option [value]="1">Active</option>

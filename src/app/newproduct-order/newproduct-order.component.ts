@@ -76,7 +76,7 @@ interface Product {
       
         // Send the new order to the server with a delay of 2 seconds
         setTimeout(() => {
-          this.http.post('https://nodeapi.yusyah.com/adminupdateproductorder', { order: newOrder }).subscribe(response => {
+          this.http.post('https://nodeapi.yusyah.com/adminupdateneworders', { order: newOrder }).subscribe(response => {
             // Reload the products after updating the order
             this.snackBar.open('Updated Successfully', 'Close', {
               duration: 2000,

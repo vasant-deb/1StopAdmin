@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-          <button (click)="print()">Print</button>
+      
 
 <table class="table table-bordered">
     <thead></thead>
@@ -41,10 +41,14 @@
       </tr>
     </tbody>
   </table>
-
+  <button class="right" (click)="updateStatus()">Not Available</button>
   <table class="table table-bordered content">
+  
     <thead>
       <tr>
+        <td>
+           Check All
+          </td>
         <td class="text-right">
           <b>Quantity</b>
         </td>
@@ -61,18 +65,29 @@
         <td class="text-right">
           <b>Total</b>
         </td>
+        <td class="text-right">
+            <b>Status</b>
+          </td>
+       
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let order of order_items">
+        <td>
+            <input type="checkbox" [checked]='order.itemstatus == 0' (change)="toggleItemSelection(order)">
+        </td>
         <td class="text-center quantity">{{order.quantity}}</td>
-        <td>{{order.name}}</td>
+        <td *ngIf="order.itemstatus==1">{{order.name}}</td>
+        <td *ngIf="order.itemstatus==0"><del>{{order.name}}</del></td>
         <td>
           <img [src]="assetsUrl +'products/'+ order.image" width="100px" height="100px" class="img-responsive imgprint">
         </td>
        
         <td class="text-right">{{order.price}}</td>
         <td class="text-right">{{order.subtotal}}</td>
+        <td class="text-right" *ngIf="order.itemstatus==0">Not Available</td>
+       
+        <td class="text-right" *ngIf="order.itemstatus==1">Available</td>
       </tr>
       <tr>
         <td colspan="4" class="text-right">
@@ -91,6 +106,7 @@
           <b>Total</b>
         </td>
         <td class="text-right">{{this.orders.total}}</td>
+       
       </tr>
     </tbody>
   </table>

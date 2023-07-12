@@ -73,10 +73,10 @@ interface Category {
 
         // Create an array of all product IDs in the new order
         const newOrder = this.subcategories.map(category => category.id);
-      
+        const newOrderJson = JSON.stringify(newOrder);
         // Send the new order to the server with a delay of 2 seconds
         setTimeout(() => {
-          this.http.post(apiUrl + '/adminupdatecategoryorder', { order: newOrder }).subscribe(response => {
+          this.http.post('https://nodeapi.1stopwireless.ca/adminupdatelatestcategoryorders', { order: newOrderJson }).subscribe(response => {
             // Reload the products after updating the order
             this.snackBar.open('Updated Successfully', 'Close', {
               duration: 2000,

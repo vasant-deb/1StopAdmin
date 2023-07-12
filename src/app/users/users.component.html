@@ -1,8 +1,5 @@
 <app-header></app-header>
-
-
 <div class="container content">
-  
     <div class="row">
       <div class="col-md-5 mb-3">
         <h2>Users</h2>
@@ -10,7 +7,6 @@
         <div class="col-md-7 mb-3">
         <input type="text" [(ngModel)]="searchText" placeholder="Search users" (input)="onSearch()" class="form-control">
       </div>
-      
     </div>
     <div class="row">
       <div class="col-md-12">
@@ -22,7 +18,7 @@
               <th>Email</th>
               <th>Phone</th>
               <th>Password</th>
-              
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -33,12 +29,13 @@
               <td>{{ product.email }}</td>
               <td>{{ product.phone }}</td>
               <td>{{ product.user_password }}</td>
-             
+             <td><select (change)="updateStatus(product.id)" [(ngModel)]="product.active">
+              <option [value]="1">Active</option>
+              <option [value]="0">Inactive</option>
+            </select></td>
               <td><a class="btn btn-primary mg3" href='/edit-user?id={{product.id}}' target="_blank">Edit</a>
                 <button class="btn btn-danger" (click)="deleteProduct(product.id,product.first_name)">Delete</button>
               </td>
-             
-              
             </tr>
           </tbody>
         </table>

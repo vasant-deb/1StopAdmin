@@ -31,17 +31,18 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { DeviceOrderComponent } from './device-order/device-order.component';
 
 import { SettingsComponent } from './settings/settings.component';
-
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditOrderComponent } from './edit-order/edit-order.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
 
-
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'edit-category', component: EditCategoryComponent },
   { path: 'add-category', component: AddCategoryComponent },
   { path: 'category-order', component: CategoryOrderComponent },
   { path: 'device-order', component: DeviceOrderComponent },
-
+  { path: 'edit-order', component: EditOrderComponent },
   { path: 'banners', component: BannersComponent },
   { path: 'edit-banner', component: EditBannerComponent },
   { path: 'add-banner', component: AddBannerComponent },

@@ -15,10 +15,11 @@ interface Order {
   customer_name: string;
   customer_email:string;
   customer_phone:string;
-  subtotal: number;
+  total: number;
   item_count: number;
   status: string;
   shipping_method:string;
+  shipping_address:string;
   created:string;
 }
 
@@ -51,7 +52,7 @@ details:any;
       .subscribe(
         (response: any) => {
           console.log(response);
-          this.details = response;
+          this.details = response.stats;
         },
         (error) => {
           console.log(error);
@@ -59,7 +60,6 @@ details:any;
       );
   }
   getAllOrders() {
-    
     this.http.get<Order[]>(apiUrl+'admingetorders')
       .subscribe(
         (response: Order[]) => {

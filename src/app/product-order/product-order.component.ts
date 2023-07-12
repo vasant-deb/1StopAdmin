@@ -84,7 +84,7 @@ interface Product {
       
       saveProductOrder() {
         this.spinner.show();
-
+debugger;
         // Create an array of all product IDs in the new order
         const newOrder = this.products.map(product => product.id);
       

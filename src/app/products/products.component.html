@@ -2,24 +2,55 @@
 
 
 <div class="container content">
-    <h2>Products</h2>
+    <h2> <div class="filters">
+      <mat-form-field appearance="fill">
+        <mat-label>Active</mat-label>
+        <mat-select [(ngModel)]="filterActive" (ngModelChange)="onFilterChange()">
+          <mat-option value="all">All Products</mat-option>
+          <mat-option value="1">Active Products</mat-option>
+          <mat-option value="0">Inactive Products</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="filterType" (ngModelChange)="onFilterChange()">
+          <mat-option value="all">All Products</mat-option>
+          <mat-option value="new">New Arrivals</mat-option>
+          <mat-option value="sale">Sale Items</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    </div></h2>
     <div class="row">
-      <div class="col-md-5 mb-3">
+      <div class="col-md-4 mb-3">
         <input type="text" [(ngModel)]="searchText" placeholder="Search products" (input)="onSearch()" class="form-control">
       </div>
-      <div class="col-md-7">
+      <div class="col-md-8">
         <a class="btn btn-primary mb-3" href="add-product">Add Product</a>
-      <a class="btn btn-danger mb-3" href="product-order">Product Order</a>
-        <a class="btn btn-warning mb-3" href="newproduct-order">New Arrival Order</a>
-         <a class="btn btn-primary mb-3" href="sales-order">Sales Order</a>
-        <a class="btn btn-danger mb-3" href="bulk-edit">Bulk Edit</a>
+      <a class="btn btn-danger mb-3" href="/productorder/productorder">Product Order</a>
+      <a class="btn btn-warning mb-3" href="/productorder/new">New Arrival</a>
+        <a class="btn btn-primary mb-3" href="/productorder/newproductorder">New Arrival Order</a>
+        <a class="btn btn-danger mb-3" href="/productorder/sale">Sale</a>
+         <a class="btn btn-warning mb-3" href="/productorder/hotproductorder">Sales Order</a>
+        <a class="btn btn-primary mb-3" href="/productorder/bulkedit">Bulk Edit</a>
   </div>
+  
     </div>
+
+<div class="sidebar" *ngIf="isCheckboxChecked">
+<button  (click)="action('newarrival')" class="btn btn-primary rounder">New Arrival</button>
+<button  (click)="action('sale')"  class="btn btn-warning rounder">Sale</button>
+<button  (click)="action('active')"  class="btn btn-active rounder">Active</button>
+<button   (click)="action('inactive')"  class="btn btn-danger rounder">Inactive</button>
+</div> 
+
     <div class="row">
       <div class="col-md-12">
+       
         <table class="table">
           <thead>
             <tr>
+              <th class="text-center"><button (click)="selectAllCheckboxes()">Check All</button></th>
               <th>ID</th>
               <th>Name</th>
               <th>Price</th>
@@ -32,6 +63,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let product of displayedProducts">
+              <td class="text-center"><input (change)="showblock()" type="checkbox" name="productId" id="productId" [(ngModel)]="product.checked" value="{{ product.id }}"></td>
               <td>{{ product.id }}</td>
               <td>{{ product.name }}</td>
               <td>{{ product.price }}</td>
@@ -41,7 +73,7 @@
               <td><button (click)="editProduct(product.id)">Edit</button>
               </td>
               <td>
-                <select (change)="updateStatus(product.id)" [(ngModel)]="product.active">
+                <select (change)="updateStatus(product.id)" [ngClass]="{'active': product.active == 1, 'inactive': product.active == 0}" [(ngModel)]="product.active">
                   <option [value]="1">Active</option>
                   <option [value]="0">Inactive</option>
                 </select>

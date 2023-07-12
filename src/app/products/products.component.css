@@ -4,3 +4,43 @@
 .btn.mb-3{
     margin:0px 2px;
 }
+.sidebar {
+    position: fixed;
+    left: 0;
+    display: inline-grid;
+}
+.sidebar button {
+    margin: 5px 0px;
+}
+.btn-active{
+    background-color: green;
+    color:white;
+}
+
+select{
+    color: white;
+}
+option{
+    background-color: white;
+    color: black;
+}
+.Pending {
+    background-color: orange;
+  }
+  
+.Process {
+    background-color: blue;
+  }
+  
+  .Shipped {
+    background-color: purple;
+  }
+  
+  .active {
+    background-color: green;
+ 
+  }
+  
+ .inactive {
+    background-color: red;
+  }
